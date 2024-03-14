@@ -54,7 +54,7 @@ class ClassDataset(Dataset):
         return image, label
 
 
-def create_dataloader(cur_dir=cur_dir, train_ratio=train_ratio, train_transforms=[], valid_transforms=[], 
+def create_dataloader(cur_dir, train_ratio=0.8, train_transforms=[], valid_transforms=[], 
                       batch_size=32, num_workers=4, use_original=True):
     
     data_size = 0
