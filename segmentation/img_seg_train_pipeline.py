@@ -161,8 +161,8 @@ def seg_train(model, num_epochs, title, train_loader, valid_loader, optimizer, l
         )
 
     for epoch in range(num_epochs):
-        train_loss, train_accuracy, train_iou = train(model)
-        valid_loss, valid_accuracy, valid_iou = evaluate(model, valid_loader)
+        train_loss, train_accuracy, train_iou = train(model, train_loader, optimizer, loss_fn)
+        valid_loss, valid_accuracy, valid_iou = evaluate(model, valid_loader, optimizer, loss_fn)
 
         train_loss_history.append(train_loss)
         valid_loss_history.append(valid_loss)
