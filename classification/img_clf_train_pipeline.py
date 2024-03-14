@@ -115,7 +115,7 @@ def plot_stats(
     plt.show()
 
 
-def whole_train_valid_cycle(model, num_epochs, title, train_loader, valid_loader, optimizer, loss_fn, silent=True):
+def clf_train(model, num_epochs, title, train_loader, valid_loader, optimizer, loss_fn, scheduler=None, silent=True):
     train_loss_history, valid_loss_history = [], []
     train_acc_history, valid_acc_history = [], []
 
@@ -140,6 +140,9 @@ def whole_train_valid_cycle(model, num_epochs, title, train_loader, valid_loader
         
         train_acc_history.append(train_accuracy)
         valid_acc_history.append(valid_accuracy)
+
+        if scheduler is not None:
+            scheduler.step()
 
         if not silent:
             wandb.log({"train_loss": train_loss, "train_acc": train_accuracy, "valid_loss": valid_loss, "val_acc": valid_accuracy})
