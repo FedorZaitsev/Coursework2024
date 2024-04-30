@@ -122,12 +122,12 @@ def clf_train(model, num_epochs, title, train_loader, valid_loader, optimizer, l
     if not silent:
         run = wandb.init(
             # Set the project where this run will be logged
-            project="my-awesome-project",
+            project="Coursework2024",
             # Track hyperparameters and run metadata
             config={
                 "learning_rate": optimizer.param_groups[-1]['lr'],
                 "epochs": num_epochs,
-                "vocab_size": model.vocab_size_de
+                "model": title
             },
         )
 

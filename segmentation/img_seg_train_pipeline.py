@@ -156,7 +156,7 @@ def seg_train(model, num_epochs, title, train_loader, valid_loader, optimizer, l
             config={
                 "learning_rate": optimizer.param_groups[-1]['lr'],
                 "epochs": num_epochs,
-                "vocab_size": model.vocab_size_de
+                "model": title
             },
         )
 
