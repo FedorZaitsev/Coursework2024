@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 
 class ClassDataset(Dataset):
+    """ Custom class for creating dataset object """
     def __init__(self, root_dir, idx, transform=None, pred_mode=None):
                 
         self.transform = transform
@@ -55,7 +56,9 @@ class ClassDataset(Dataset):
 
 
 def create_dataloader(cur_dir, train_ratio=0.8, train_transforms=[], valid_transforms=[], 
-                      batch_size=32, num_workers=4, use_original=True):
+                      batch_size=32, num_workers=4, use_original=True, worker_init_fn=None, generator=None):
+    
+    """ Function for creating dataloaders """
     
     data_size = 0
     p, classes_train, _ = next(os.walk(cur_dir))
@@ -91,11 +94,16 @@ def create_dataloader(cur_dir, train_ratio=0.8, train_transforms=[], valid_trans
         train_dataset_aug += [train_dataset]
         valid_dataset_aug += [valid_dataset]
     
-    train_loader = DataLoader(ConcatDataset(train_dataset_aug), 
-                              batch_size=batch_size, shuffle=True, num_workers=num_workers, 
-                              pin_memory=True)
-    valid_loader = DataLoader(ConcatDataset(valid_dataset_aug), 
-                              batch_size=batch_size, shuffle=True, num_workers=num_workers, 
-                              pin_memory=True)
+    train_loader, valid_loader = None, None
+
+    if idx_train:
+        train_loader = DataLoader(ConcatDataset(train_dataset_aug), 
+                                batch_size=batch_size, shuffle=True, num_workers=num_workers, 
+                                pin_memory=True, worker_init_fn=worker_init_fn, generator=generator)
+    
+    if idx_valid:
+        valid_loader = DataLoader(ConcatDataset(valid_dataset_aug), 
+                                batch_size=batch_size, shuffle=True, num_workers=num_workers, 
+                                pin_memory=True, worker_init_fn=worker_init_fn, generator=generator)
     
     return train_loader, valid_loader

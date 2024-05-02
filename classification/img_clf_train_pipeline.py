@@ -115,14 +115,17 @@ def plot_stats(
     plt.show()
 
 
-def clf_train(model, num_epochs, title, train_loader, valid_loader, optimizer, loss_fn, scheduler=None, silent=True):
+def clf_train(model, num_epochs, title, train_loader, valid_loader, optimizer, loss_fn, 
+              scheduler=None, wandb_log=False, key=None, proj_name="Coursework2024", verbose=True):
     train_loss_history, valid_loss_history = [], []
     train_acc_history, valid_acc_history = [], []
 
-    if not silent:
+    if wandb_log:
+
+        wandb.login(key=key)
         run = wandb.init(
             # Set the project where this run will be logged
-            project="Coursework2024",
+            project=proj_name,
             # Track hyperparameters and run metadata
             config={
                 "learning_rate": optimizer.param_groups[-1]['lr'],
@@ -144,13 +147,17 @@ def clf_train(model, num_epochs, title, train_loader, valid_loader, optimizer, l
         if scheduler is not None:
             scheduler.step()
 
-        if not silent:
+        if wandb_log:
             wandb.log({"train_loss": train_loss, "train_acc": train_accuracy, "valid_loss": valid_loss, "val_acc": valid_accuracy})
 
-        clear_output()
 
-        plot_stats(
-            train_loss_history, valid_loss_history,
-            train_acc_history, valid_acc_history,
-            title
-        )
+        if verbose:
+            clear_output()
+
+            plot_stats(
+                train_loss_history, valid_loss_history,
+                train_acc_history, valid_acc_history,
+                title
+            )
+
+    return train_loss_history, valid_loss_history, train_acc_history, valid_acc_history,
