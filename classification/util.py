@@ -105,4 +105,4 @@ def parse_config(cfg_path):
 
     cfg['q_model_save_path'] = data['q_model_save_path']
 
-    return None
+    return cfg
