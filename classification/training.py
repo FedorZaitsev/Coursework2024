@@ -34,17 +34,17 @@ def train_model(model, train_dir, aug_cfg, optimizer, loss_fn,
 
     train_loader, valid_loader = create_dataloader(cur_dir=train_dir, 
                                                train_ratio=train_ratio, 
-                                               train_transforms=aug_cfg.transforms,
-                                               valid_transforms=aug_cfg.valid_transforms,
-                                               use_original=aug_cfg.use_original,
+                                               train_transforms=aug_cfg['transforms'],
+                                               valid_transforms=aug_cfg['valid_transforms'],
+                                               use_original=aug_cfg['use_original'],
                                                )
 
     if valid_dir:
         valid_loader, _ = create_dataloader(cur_dir=valid_dir, 
                                                train_ratio=1, 
-                                               train_transforms=aug_cfg.valid_transforms,
-                                               valid_transforms=None,
-                                               use_original=aug_cfg.use_original,
+                                               train_transforms=aug_cfg['valid_transforms'],
+                                               valid_transforms=[],
+                                               use_original=aug_cfg['use_original'],
                                                )
         
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
