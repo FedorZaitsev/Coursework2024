@@ -3,8 +3,8 @@ import torch
 import random
 import os
 
-from img_clf_dataset import create_dataloader
-from img_clf_train_pipeline import clf_train, evaluate
+from .img_clf_dataset import create_dataloader
+from .img_clf_train_pipeline import clf_train, evaluate
 
 
 def set_seed(seed: int = 42) -> None:
