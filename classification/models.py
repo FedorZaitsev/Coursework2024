@@ -89,6 +89,8 @@ def QuantizableResNet18(pretrained=True):
         nn.Linear(1000, 2)
     )
 
+    return model
+
 def QuantizedResNet18():
     model_fp32 = QuantizableResNet18(pretrained=False)
     model_fp32.eval()
