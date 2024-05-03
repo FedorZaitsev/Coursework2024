@@ -84,7 +84,7 @@ def QuantizableResNet18(pretrained=True):
         weights = ResNet18_Weights.IMAGENET1K_V1
 
     model = nn.Sequential(
-        resnet18(num_classes=1000, weights=ResNet18_Weights.IMAGENET1K_V1),
+        resnet18(num_classes=1000, weights=weights),
         torch.ao.quantization.QuantStub(),
         nn.Linear(1000, 2)
     )
