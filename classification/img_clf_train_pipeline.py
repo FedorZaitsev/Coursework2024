@@ -58,6 +58,9 @@ def evaluate(model, loader, optimizer, loss_fn):
 
     device = next(model.parameters()).device
 
+    if len(loader) == 0:
+        return 0, 0
+    
     total_loss = 0
     total = 0
     correct = 0
@@ -160,4 +163,4 @@ def clf_train(model, num_epochs, title, train_loader, valid_loader, optimizer, l
                 title
             )
 
-    return train_loss_history, valid_loss_history, train_acc_history, valid_acc_history,
+    return train_loss_history, valid_loss_history, train_acc_history, valid_acc_history
