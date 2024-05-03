@@ -107,3 +107,32 @@ def create_dataloader(cur_dir, train_ratio=0.8, train_transforms=[], valid_trans
                                 pin_memory=True, worker_init_fn=worker_init_fn, generator=generator)
     
     return train_loader, valid_loader
+
+def get_loaders(train_dir, aug_cfg, valid_dir=None, train_ratio=0.8, 
+                batch_size=32, num_workers=4, worker_init_fn=None, generator=None):
+
+
+    train_loader, valid_loader = create_dataloader(cur_dir=train_dir, 
+                                            train_ratio=train_ratio, 
+                                            train_transforms=aug_cfg['transforms'],
+                                            valid_transforms=aug_cfg['valid_transforms'],
+                                            use_original=aug_cfg['use_original'],
+                                            worker_init_fn=worker_init_fn,
+                                            generator=generator,
+                                            batch_size=batch_size, 
+                                            num_workers=num_workers
+                                            )
+
+    if valid_dir:
+        valid_loader, _ = create_dataloader(cur_dir=valid_dir, 
+                                                train_ratio=1, 
+                                                train_transforms=aug_cfg['valid_transforms'],
+                                                valid_transforms=[],
+                                                use_original=aug_cfg['use_original'],
+                                                worker_init_fn=worker_init_fn,
+                                                generator=generator,
+                                                batch_size=batch_size, 
+                                                num_workers=num_workers
+                                            )
+        
+    return train_loader, valid_loader
