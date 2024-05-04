@@ -11,7 +11,7 @@ from .img_clf_dataset import get_loaders
 from .quantization import static_quantize
 
 if __name__ == "__main__":
-    if len(sys.argv < 3):
+    if len(sys.argv) < 3:
         print('Please enter config path and train/valid dataset directories')
         exit(0)
     cfg = parse_config(sys.argv[1])
@@ -19,9 +19,9 @@ if __name__ == "__main__":
     valid_dir = None
     wandb_key = None
     wandb_proj_name = None
-    if len(sys.argv >= 4):
+    if len(sys.argv) >= 4:
         valid_dir = sys.argv[3]
-    if len(sys.argv >= 6):
+    if len(sys.argv) >= 6:
         wandb_key = sys.argv[3]
         wandb_proj_name = sys.argv[4]
     
