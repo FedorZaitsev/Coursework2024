@@ -4,7 +4,7 @@ import torch
 import torch.nn
 import random
 import os
-import albumenations as A
+import albumentations as A
 
 from .models import ConvModel, Swin, QuantizableResNet18, QuantizedResNet18
 
@@ -64,7 +64,11 @@ def parse_config(cfg_path):
 
     cfg['title'] = data['title']
 
-    aug_cfg = {}
+    aug_cfg = {
+        'transforms': [],
+        'valid_transforms': [],
+        'use_original': True
+        }
 
     for i in range(len(data['aug_cfg']['transforms'])):
         transform = A.from_dict(data['aug_cfg']['transforms'][str(i)])
