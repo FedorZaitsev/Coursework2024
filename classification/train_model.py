@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     model = cfg['model']
     num_epochs = cfg['num_epochs']
-    optimizer = cfg['optimizer']['instance'](model.parameters, **cfg['optimizer']['parameters'])
+    optimizer = cfg['optimizer']['instance'](model.parameters(), **cfg['optimizer']['parameters'])
     scheduler = cfg['scheduler']['instance'](optimizer, **cfg['scheduler']['parameters'])
     loss_fn = cfg['loss_fn']['instance'](cfg['loss_fn']['parameters'])
 
