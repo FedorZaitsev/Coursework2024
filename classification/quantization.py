@@ -1,6 +1,6 @@
 import torch
 import os
-from .img_clf_train_pipeline import clf_train, evaluate
+from classification.img_clf_train_pipeline import clf_train, evaluate
 
 
 def static_quantize(model, loader, loss_fn):

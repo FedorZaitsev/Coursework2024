@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import sys
 import os
 import albumentations as A
@@ -5,10 +7,10 @@ import torch
 import gc
 import torch.nn as nn
 
-from .util import set_rng, seed_worker, parse_config
-from .img_clf_train_pipeline import clf_train
-from .img_clf_dataset import get_loaders
-from .quantization import static_quantize
+from classification.util import set_rng, seed_worker, parse_config
+from classification.img_clf_train_pipeline import clf_train
+from classification.img_clf_dataset import get_loaders
+from classification.quantization import static_quantize
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
