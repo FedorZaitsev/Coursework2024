@@ -1,12 +1,12 @@
 import numpy as np
 import json
 import torch
-import torch.nn
+import torch.nn as nn
 import random
 import os
 import albumentations as A
 
-from .models import ConvModel, Swin, QuantizableResNet18, QuantizedResNet18
+from classification.models import ConvModel, Swin, QuantizableResNet18, QuantizedResNet18
 
 dict_models = {
     'ConvModel': ConvModel,
