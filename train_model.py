@@ -44,8 +44,13 @@ if __name__ == "__main__":
     model.to(device)
 
     res = {}
-    res['classes'] = classes
-    res['log'] = clf_train(model=model, num_epochs=num_epochs, title=cfg['title'], train_loader=train_loader,
+    res['inference_info'] = {}
+    res['inference_info']['classes'] = classes
+    res['inference_info']['valid_transforms'] = {}
+    if len(cfg['aug_cfg']['valid_transforms']) > 0:
+        res['inference_info']['valid_transforms'] = cfg['aug_cfg']['valid_transforms'][0].to_dict()
+    res['log'] = {}
+    res['log']['training_stat'] = clf_train(model=model, num_epochs=num_epochs, title=cfg['title'], train_loader=train_loader,
          valid_loader=valid_loader, optimizer=optimizer, loss_fn=loss_fn, scheduler=scheduler, 
          wandb_log=wandb_key, key=wandb_key, proj_name=wandb_proj_name, verbose=True)
     
@@ -69,7 +74,7 @@ if __name__ == "__main__":
                 total += y.size(0)
                 correct += (y_pred == y).sum().item()
             accuracy = correct / total
-        res['quantized_acc'] = accuracy
+        res['log']['quantized_acc'] = accuracy
         
     import json
     json.dump(res, open(cfg['title'] + '_log.json', 'w') )

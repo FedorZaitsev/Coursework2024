@@ -31,7 +31,7 @@
         "instance": "CrossEntropyLoss",
         "parameters": {}
     },
-    "model_save_path": "model1",
-    "q_model_save_path": "q_model1",
+    "model_save_path": "ResNet18_model",
+    "q_model_save_path": "ResNet18_quantized_model",
     "quantize": true    
 }

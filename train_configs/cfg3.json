@@ -13,7 +13,7 @@
             "pretrained": true
         }
     },
-    "num_epochs": 30,
+    "num_epochs": 20,
     "optimizer": {
         "instance": "AdamW",
         "parameters": {
@@ -24,14 +24,14 @@
     "scheduler": {
         "instance": "CosineAnnealingLR",
         "parameters": {
-            "T_max": 30
+            "T_max": 20
         }
     },
     "loss_fn": {
         "instance": "CrossEntropyLoss",
         "parameters": {}
     },
-    "model_save_path": "swin_model",
+    "model_save_path": "Swin_model",
     "q_model_save_path": "",
     "quantize": false   
 }

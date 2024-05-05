@@ -2,23 +2,25 @@ import sys
 import os
 import torch
 import torchvision.transforms as T
+import albumentations as A
 from PIL import Image
 
 file_dir = os.path.dirname(__file__)
 sys.path.append(file_dir)
 
-from util import get_model
+from util import get_model, parse_config
 
 
 class Model():
-    def __init__(self, model_type, model_state_dict):
+    def __init__(self, model_type, model_state_dict, inference_info):
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        self.inference_info = inference_info
         if model_type == 'QResNet18':
             self.device = torch.device('cpu')
         self.model = get_model(model_type)()
         self.model.load_state_dict(torch.load(model_state_dict, map_location=self.device))
 
-    def inference(self, filename, transform=None):
+    def inference(self, filename):
         x_t = T.Compose(
             [
                 T.Resize((256, 256)),
@@ -28,6 +30,9 @@ class Model():
         image = Image.open(filename)
         image = x_t(image)
         
+        if len(self.inference_info['valid_transforms']) > 0:
+            transform = A.from_dict(self.inference_info['valid_transforms'])
+
         if transform:
             transformed = transform(image=image.permute(1, 2, 0).numpy())
             image = torch.tensor(transformed['image']).permute(2, 0, 1)
@@ -36,7 +41,8 @@ class Model():
         self.model = self.model.to(self.device)
         image = image.to(self.device)
         self.model.eval()
-        return self.model(image)
+        _, y_pred = torch.max(self.model(image), 1)
+        return self.inference_info['classes'](y_pred)
 
 if __name__ == "__main__":
     model_state = '/home/fedor/Coursework2024/model2'
