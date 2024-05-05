@@ -43,6 +43,8 @@ if __name__ == "__main__":
     loss_fn = cfg['loss_fn']['instance'](**cfg['loss_fn']['parameters'])
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    print('Current device is:', device)
+    model.to(device)
 
     res = {}
     res['log'] = clf_train(model=model, num_epochs=num_epochs, title=cfg['title'], train_loader=train_loader,
