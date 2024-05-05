@@ -107,7 +107,7 @@ def create_dataloader(cur_dir, train_ratio=0.8, train_transforms=[], valid_trans
                                 pin_memory=True, worker_init_fn=worker_init_fn, generator=generator)
     
 
-    classes = train_dataset_aug.classes
+    classes = train_dataset.classes
     return train_loader, valid_loader
 
 def get_loaders(train_dir, aug_cfg, valid_dir=None, train_ratio=0.8, 
