@@ -24,30 +24,33 @@ if __name__ == "__main__":
     if len(sys.argv) >= 4:
         valid_dir = sys.argv[3]
     if len(sys.argv) >= 6:
-        wandb_key = sys.argv[3]
-        wandb_proj_name = sys.argv[4]
+        wandb_key = sys.argv[4]
+        wandb_proj_name = sys.argv[5]
     
 
-    gen = set_rng(42)
-    train_loader, valid_loader = get_loaders(train_dir=train_dir, valid_dir=valid_dir,
-                                         aug_cfg=cfg['aug_cfg'], train_ratio=cfg['train_ratio'],
-                                         worker_init_fn=seed_worker, generator=gen)
+    gen = set_rng(cfg['seed'])
+    train_loader, valid_loader, classes = get_loaders(train_dir=train_dir, valid_dir=valid_dir, 
+                                                      aug_cfg=cfg['aug_cfg'], train_ratio=cfg['train_ratio'], 
+                                                      worker_init_fn=seed_worker, generator=gen)
 
     torch.cuda.empty_cache()
     gc.collect()
 
     model = cfg['model']
     num_epochs = cfg['num_epochs']
-    optimizer = cfg['optimizer']['instance'](model.parameters, **cfg['optimizer']['parameters'])
+    optimizer = cfg['optimizer']['instance'](model.parameters(), **cfg['optimizer']['parameters'])
     scheduler = cfg['scheduler']['instance'](optimizer, **cfg['scheduler']['parameters'])
-    loss_fn = cfg['loss_fn']['instance'](cfg['loss_fn']['parameters'])
+    loss_fn = cfg['loss_fn']['instance'](**cfg['loss_fn']['parameters'])
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    print('Current device is:', device)
+    model.to(device)
 
     res = {}
+    res['classes'] = classes
     res['log'] = clf_train(model=model, num_epochs=num_epochs, title=cfg['title'], train_loader=train_loader,
          valid_loader=valid_loader, optimizer=optimizer, loss_fn=loss_fn, scheduler=scheduler, 
-         wandb_log=True, key=wandb_key, proj_name=wandb_proj_name, verbose=True)
+         wandb_log=wandb_key, key=wandb_key, proj_name=wandb_proj_name, verbose=True)
     
     torch.save(model.state_dict(), cfg['model_save_path'])
 
@@ -63,15 +66,14 @@ if __name__ == "__main__":
                 x = x.to('cpu')        
                 y = y.type(torch.LongTensor)
                 y = y.to('cpu')
-                output = model_int8(x)
+                output = q_model(x)
                 output.to('cpu')
                 _, y_pred = torch.max(output, 1)
                 total += y.size(0)
                 correct += (y_pred == y).sum().item()
             accuracy = correct / total
+        res['quantized_acc'] = accuracy
         
-    res['quantized_acc'] = accuracy
-
     import json
     json.dump(res, open( 'log.json', 'w' ) )
 

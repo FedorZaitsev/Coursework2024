@@ -106,13 +106,15 @@ def create_dataloader(cur_dir, train_ratio=0.8, train_transforms=[], valid_trans
                                 batch_size=batch_size, shuffle=True, num_workers=num_workers, 
                                 pin_memory=True, worker_init_fn=worker_init_fn, generator=generator)
     
-    return train_loader, valid_loader
+
+    classes = train_dataset.classes
+    return train_loader, valid_loader, classes
 
 def get_loaders(train_dir, aug_cfg, valid_dir=None, train_ratio=0.8, 
-                batch_size=32, num_workers=4, worker_init_fn=None, generator=None):
+                batch_size=32, num_workers=4, worker_init_fn=None, generator=None, classes=None):
 
 
-    train_loader, valid_loader = create_dataloader(cur_dir=train_dir, 
+    train_loader, valid_loader, classes = create_dataloader(cur_dir=train_dir, 
                                             train_ratio=train_ratio, 
                                             train_transforms=aug_cfg['transforms'],
                                             valid_transforms=aug_cfg['valid_transforms'],
@@ -124,7 +126,7 @@ def get_loaders(train_dir, aug_cfg, valid_dir=None, train_ratio=0.8,
                                             )
 
     if valid_dir:
-        valid_loader, _ = create_dataloader(cur_dir=valid_dir, 
+        valid_loader, _, _ = create_dataloader(cur_dir=valid_dir, 
                                                 train_ratio=1, 
                                                 train_transforms=aug_cfg['valid_transforms'],
                                                 valid_transforms=[],
@@ -135,4 +137,4 @@ def get_loaders(train_dir, aug_cfg, valid_dir=None, train_ratio=0.8,
                                                 num_workers=num_workers
                                             )
         
-    return train_loader, valid_loader
+    return train_loader, valid_loader, classes
