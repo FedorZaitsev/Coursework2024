@@ -5,8 +5,12 @@ import torch.nn as nn
 import random
 import os
 import albumentations as A
+import sys
 
-from classification.models import ConvModel, Swin, QuantizableResNet18, QuantizedResNet18
+file_dir = os.path.dirname(__file__)
+sys.path.append(file_dir)
+
+from models import ConvModel, Swin, QuantizableResNet18, QuantizedResNet18
 
 dict_models = {
     'ConvModel': ConvModel,

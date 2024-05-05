@@ -7,10 +7,7 @@ import torch
 import gc
 import torch.nn as nn
 
-from classification.util import set_rng, seed_worker, parse_config
-from classification.img_clf_train_pipeline import clf_train
-from classification.img_clf_dataset import get_loaders
-from classification.quantization import static_quantize
+from classification import set_rng, seed_worker, parse_config, clf_train, get_loaders, static_quantize
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
@@ -75,7 +72,7 @@ if __name__ == "__main__":
         res['quantized_acc'] = accuracy
         
     import json
-    json.dump(res, open( 'log.json', 'w' ) )
+    json.dump(res, open(cfg['title'] + '_log.json', 'w') )
 
     exit(0)
     

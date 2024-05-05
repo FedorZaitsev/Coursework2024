@@ -1,6 +1,11 @@
 import torch
 import os
-from classification.img_clf_train_pipeline import clf_train, evaluate
+import sys
+
+file_dir = os.path.dirname(__file__)
+sys.path.append(file_dir)
+
+from img_clf_train_pipeline import clf_train, evaluate
 
 
 def static_quantize(model, loader, loss_fn):
