@@ -47,7 +47,7 @@ if __name__ == "__main__":
     res = {}
     res['log'] = clf_train(model=model, num_epochs=num_epochs, title=cfg['title'], train_loader=train_loader,
          valid_loader=valid_loader, optimizer=optimizer, loss_fn=loss_fn, scheduler=scheduler, 
-         wandb_log=True, key=wandb_key, proj_name=wandb_proj_name, verbose=True)
+         wandb_log=wandb_key, key=wandb_key, proj_name=wandb_proj_name, verbose=True)
     
     torch.save(model.state_dict(), cfg['model_save_path'])
 
