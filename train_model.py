@@ -73,9 +73,8 @@ if __name__ == "__main__":
                 total += y.size(0)
                 correct += (y_pred == y).sum().item()
             accuracy = correct / total
+        res['quantized_acc'] = accuracy
         
-    res['quantized_acc'] = accuracy
-
     import json
     json.dump(res, open( 'log.json', 'w' ) )
 
