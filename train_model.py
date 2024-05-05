@@ -31,7 +31,7 @@ if __name__ == "__main__":
     gen = set_rng(cfg['seed'])
     train_loader, valid_loader, classes = get_loaders(train_dir=train_dir, valid_dir=valid_dir, 
                                                       aug_cfg=cfg['aug_cfg'], train_ratio=cfg['train_ratio'], 
-                                                      worker_init_fn=seed_worker, generator=gen, classes=classes)
+                                                      worker_init_fn=seed_worker, generator=gen)
 
     torch.cuda.empty_cache()
     gc.collect()
