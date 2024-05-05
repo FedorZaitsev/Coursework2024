@@ -28,7 +28,7 @@ if __name__ == "__main__":
         wandb_proj_name = sys.argv[4]
     
 
-    gen = set_rng(42)
+    gen = set_rng(cfg['seed'])
     train_loader, valid_loader = get_loaders(train_dir=train_dir, valid_dir=valid_dir,
                                          aug_cfg=cfg['aug_cfg'], train_ratio=cfg['train_ratio'],
                                          worker_init_fn=seed_worker, generator=gen)
@@ -65,7 +65,7 @@ if __name__ == "__main__":
                 x = x.to('cpu')        
                 y = y.type(torch.LongTensor)
                 y = y.to('cpu')
-                output = model_int8(x)
+                output = q_model(x)
                 output.to('cpu')
                 _, y_pred = torch.max(output, 1)
                 total += y.size(0)

@@ -64,6 +64,8 @@ def parse_config(cfg_path):
 
     cfg['title'] = data['title']
 
+    cfg['seed'] = data['seed']
+
     aug_cfg = {
         'transforms': [],
         'valid_transforms': [],
