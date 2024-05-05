@@ -24,8 +24,8 @@ if __name__ == "__main__":
     if len(sys.argv) >= 4:
         valid_dir = sys.argv[3]
     if len(sys.argv) >= 6:
-        wandb_key = sys.argv[3]
-        wandb_proj_name = sys.argv[4]
+        wandb_key = sys.argv[4]
+        wandb_proj_name = sys.argv[5]
     
 
     gen = set_rng(cfg['seed'])
