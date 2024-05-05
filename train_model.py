@@ -40,7 +40,7 @@ if __name__ == "__main__":
     num_epochs = cfg['num_epochs']
     optimizer = cfg['optimizer']['instance'](model.parameters(), **cfg['optimizer']['parameters'])
     scheduler = cfg['scheduler']['instance'](optimizer, **cfg['scheduler']['parameters'])
-    loss_fn = cfg['loss_fn']['instance'](cfg['loss_fn']['parameters'])
+    loss_fn = cfg['loss_fn']['instance'](**cfg['loss_fn']['parameters'])
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
