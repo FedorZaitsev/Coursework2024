@@ -9,9 +9,7 @@
     "train_ratio": 1,
     "model": {
         "instance": "ConvModel",
-        "parameters": {
-            "pretrained": true
-        }
+        "parameters": {}
     },
     "num_epochs": 15,
     "optimizer": {
