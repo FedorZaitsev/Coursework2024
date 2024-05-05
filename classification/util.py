@@ -15,6 +15,9 @@ dict_models = {
     'QResNet18': QuantizedResNet18
 }
 
+def get_model(model_name):
+    return dict_models[model_name]
+
 dict_optimizers = {
     'Adam': torch.optim.Adam,
     'AdamW': torch.optim.AdamW,
@@ -86,7 +89,7 @@ def parse_config(cfg_path):
 
     cfg['train_ratio'] = data['train_ratio']
 
-    cfg['model'] = dict_models[data['model']['instance']](**data['model']['parameters'])
+    cfg['model'] = get_model(data['model']['instance'])(**data['model']['parameters'])
 
     cfg['num_epochs'] = data['num_epochs']
 
