@@ -15,7 +15,7 @@ class Model():
     def __init__(self, model_type, model_state_dict, inference_info):
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         self.inference_info = inference_info
-        if model_type == 'QResNet18':
+        if model_type == 'QuantizedResNet18':
             self.device = torch.device('cpu')
         self.model = get_model(model_type)(num_classes=len(self.inference_info['classes']))
         self.model.load_state_dict(torch.load(model_state_dict, map_location=self.device))
@@ -44,11 +44,11 @@ class Model():
         self.model.eval()
         output = self.model(image)
         _, y_pred = torch.max(output, 1)
-        print(output)
+        # print(output)
         return self.inference_info['classes'][y_pred]
 
 if __name__ == "__main__":
-    model_state = '/home/fedor/Coursework2024/models/ResNet18_model'
+    model_state = '../models/ResNet18_model'
     inference_info = {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}
     model = Model('ResNet18', model_state, inference_info)
 

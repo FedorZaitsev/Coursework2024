@@ -1,4 +1,4 @@
 {
-	"models":
-	{}
+	"models_config": {"ResNet18_CucumberDiseaseDataset": {"inference_info": {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}, "model_type": "ResNet18", "state_dict": "models/ResNet18_model"}, "QuantizedResNet18_CucumberDiseaseDataset": {"inference_info": {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}, "state_dict": "models/ResNet18_quantized_model", "model_type": "QuantizedResNet18"}},
+	"users_config": {}
 }
