@@ -44,18 +44,21 @@ if __name__ == "__main__":
     model.to(device)
 
     res = {}
-    res['inference_info'] = {}
-    res['inference_info']['classes'] = classes
-    res['inference_info']['valid_transforms'] = {}
+    model_info = {}
+    model_info['inference_info'] = {}
+    model_info['model_type'] = cfg['model_type']
+    model_info['inference_info']['classes'] = classes
+    model_info['inference_info']['valid_transforms'] = {}
     if len(cfg['aug_cfg']['valid_transforms']) > 0:
-        res['inference_info']['valid_transforms'] = cfg['aug_cfg']['valid_transforms'][0].to_dict()
+        model_info['inference_info']['valid_transforms'] = cfg['aug_cfg']['valid_transforms'][0].to_dict()
     res['log'] = {}
     res['log']['training_stat'] = clf_train(model=model, num_epochs=num_epochs, title=cfg['title'], train_loader=train_loader,
          valid_loader=valid_loader, optimizer=optimizer, loss_fn=loss_fn, scheduler=scheduler, 
          wandb_log=wandb_key, key=wandb_key, proj_name=wandb_proj_name, verbose=True)
     
     torch.save(model.state_dict(), cfg['model_save_path'])
-
+    model_info['state_dict'] = cfg['model_save_path']
+    models = {cfg['title']: model_info}
     if cfg['quantize']:
         q_model = static_quantize(model=model, loader=train_loader, loss_fn=loss_fn)
         torch.save(q_model.state_dict(), cfg['q_model_save_path'])
@@ -75,9 +78,30 @@ if __name__ == "__main__":
                 correct += (y_pred == y).sum().item()
             accuracy = correct / total
         res['log']['quantized_acc'] = accuracy
-        
+
+        q_model_info = {}
+        q_model_info['inference_info'] = model_info['inference_info']
+        q_model_info['state_dict'] = cfg['q_model_save_path']
+        q_model_info['model_type'] = 'Quantized' + cfg['model_type']
+        models['Quantized' + cfg['title']] = q_model_info
+
+
+    
+
     import json
-    json.dump(res, open(cfg['title'] + '_log.json', 'w') )
+
+    with open(cfg['title'] + '_log.json', 'w') as f:
+        json.dump(res, f)
+
+    current_models = None
+    with open('models/config.json', 'r') as f:
+        current_models = json.load(f)
+
+    for key, value in models.items():
+        current_models[key] = value
+    
+    with open('models/config.json', 'w') as f:
+        json.dump(models, f)
 
     exit(0)
     

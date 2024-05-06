@@ -16,7 +16,7 @@ dict_models = {
     'ConvModel': ConvModel,
     'Swin': Swin,
     'ResNet18': QuantizableResNet18,
-    'QResNet18': QuantizedResNet18
+    'QuantizedResNet18': QuantizedResNet18
 }
 
 def get_model(model_name):
@@ -97,6 +97,8 @@ def parse_config(cfg_path):
     model['instance'] = dict_models[data['model']['instance']]
     model['parameters'] = data['model']['parameters']
     cfg['model'] = model
+
+    cfg['model_type'] = data['model']['instance']
 
     cfg['num_epochs'] = data['num_epochs']
 
