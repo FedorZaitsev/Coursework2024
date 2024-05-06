@@ -33,7 +33,7 @@ if __name__ == "__main__":
     torch.cuda.empty_cache()
     gc.collect()
 
-    model = cfg['model']
+    model = get_model(cfg['model']['instance'])(**cfg['model']['parameters'], num_classes=len(classes))
     num_epochs = cfg['num_epochs']
     optimizer = cfg['optimizer']['instance'](model.parameters(), **cfg['optimizer']['parameters'])
     scheduler = cfg['scheduler']['instance'](optimizer, **cfg['scheduler']['parameters'])

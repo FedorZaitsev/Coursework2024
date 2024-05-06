@@ -17,7 +17,7 @@ class Model():
         self.inference_info = inference_info
         if model_type == 'QResNet18':
             self.device = torch.device('cpu')
-        self.model = get_model(model_type)()
+        self.model = get_model(model_type)(num_classes=len(self.inference_info['classes']))
         self.model.load_state_dict(torch.load(model_state_dict, map_location=self.device))
 
     def inference(self, filename):
@@ -30,6 +30,7 @@ class Model():
         image = Image.open(filename)
         image = x_t(image)
         
+        transform = None
         if len(self.inference_info['valid_transforms']) > 0:
             transform = A.from_dict(self.inference_info['valid_transforms'])
 
@@ -41,13 +42,16 @@ class Model():
         self.model = self.model.to(self.device)
         image = image.to(self.device)
         self.model.eval()
-        _, y_pred = torch.max(self.model(image), 1)
-        return self.inference_info['classes'](y_pred)
+        output = self.model(image)
+        _, y_pred = torch.max(output, 1)
+        print(output)
+        return self.inference_info['classes'][y_pred]
 
 if __name__ == "__main__":
-    model_state = '/home/fedor/Coursework2024/model2'
-    model = Model('ConvModel', model_state)
+    model_state = '/home/fedor/Coursework2024/models/ResNet18_model'
+    inference_info = {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}
+    model = Model('ResNet18', model_state, inference_info)
 
-    img = '/home/fedor/Coursework2024/example/1.jpg'
+    img = '/home/fedor/Coursework2024/example/5.jpg'
 
     print(model.inference(img))

@@ -93,7 +93,10 @@ def parse_config(cfg_path):
 
     cfg['train_ratio'] = data['train_ratio']
 
-    cfg['model'] = get_model(data['model']['instance'])(**data['model']['parameters'])
+    model = {}
+    model['instance'] = dict_models[data['model']['instance']]
+    model['parameters'] = data['model']['parameters']
+    cfg['model'] = model
 
     cfg['num_epochs'] = data['num_epochs']
 

@@ -1,7 +1,7 @@
 import torch.nn as nn
 import torch
 
-def ConvModel():
+def ConvModel(num_classes=2):
     model = nn.Sequential(
         nn.Conv2d(in_channels=3, out_channels=32, padding='same', kernel_size=9),
         nn.BatchNorm2d(32),
@@ -31,12 +31,12 @@ def ConvModel():
         nn.Linear(16 * 16 * 32, 1024),
         nn.BatchNorm1d(1024),
         nn.LeakyReLU(),
-        nn.Linear(1024, 2)
+        nn.Linear(1024, num_classes)
     )
 
     return model
 
-def Swin(size='t', pretrained=True):
+def Swin(size='t', pretrained=False, num_classes=2):
 
     model = None
     weights = None
@@ -49,7 +49,7 @@ def Swin(size='t', pretrained=True):
 
         model = nn.Sequential(
             swin_v2_t(num_classes=1000, weights=weights),
-            nn.Linear(1000, 2)
+            nn.Linear(1000, num_classes)
         )
 
     if size == 's':
@@ -60,7 +60,7 @@ def Swin(size='t', pretrained=True):
 
         model = nn.Sequential(
             swin_v2_s(num_classes=1000, weights=weights),
-            nn.Linear(1000, 2)           
+            nn.Linear(1000, num_classes)           
         )
 
     if size == 'b':
@@ -71,12 +71,12 @@ def Swin(size='t', pretrained=True):
         
         model = nn.Sequential(
             swin_v2_b(num_classes=1000, weights=weights),
-            nn.Linear(1000, 2)            
+            nn.Linear(1000, num_classes)            
         )
 
     return model
 
-def QuantizableResNet18(pretrained=True):
+def QuantizableResNet18(pretrained=False, num_classes=2):
     from torchvision.models.quantization import resnet18
     weights=None
     if pretrained:
@@ -86,13 +86,13 @@ def QuantizableResNet18(pretrained=True):
     model = nn.Sequential(
         resnet18(num_classes=1000, weights=weights),
         torch.ao.quantization.QuantStub(),
-        nn.Linear(1000, 2)
+        nn.Linear(1000, num_classes)
     )
 
     return model
 
-def QuantizedResNet18():
-    model_fp32 = QuantizableResNet18(pretrained=False)
+def QuantizedResNet18(num_classes=2):
+    model_fp32 = QuantizableResNet18(pretrained=False, num_classes=num_classes)
     model_fp32.eval()
     model_fp32.qconfig = torch.quantization.get_default_qconfig('x86')
     model_fp32_prepared = torch.quantization.prepare(model_fp32, inplace = False).to('cpu')
