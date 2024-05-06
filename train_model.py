@@ -7,7 +7,7 @@ import torch
 import gc
 import torch.nn as nn
 
-from classification import set_rng, seed_worker, parse_config, clf_train, get_loaders, static_quantize, get_modelt
+from classification import set_rng, seed_worker, parse_config, clf_train, get_loaders, static_quantize, get_model
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
