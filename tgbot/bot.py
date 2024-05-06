@@ -29,7 +29,6 @@ async def process_photo(message: types.Message):
     await message.answer(model.inference('test.jpg'))
     os.remove('test.jpg')
 
-# Запуск процесса поллинга новых апдейтов
 async def main():
     await dp.start_polling(bot)
 
