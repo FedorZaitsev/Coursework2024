@@ -41,7 +41,7 @@ class ClassDataset(Dataset):
                 transformed = transform(image=image.permute(1, 2, 0).numpy())
                 image = torch.tensor(transformed['image']).permute(2, 0, 1)
             
-            self.data[i] = image 
+            self.data[i] = image[:3,]
         
     def __len__(self):
         return len(self.data)
