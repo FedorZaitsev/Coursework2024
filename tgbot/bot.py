@@ -3,6 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters.command import Command
 from aiogram.enums.content_type import ContentType
+import os
 import sys
 sys.path.append("..")
 
@@ -24,8 +25,9 @@ model = None
 
 @dp.message(F.photo)
 async def process_photo(message: types.Message):
-    await message.bot.download(file=message.photo[-1].file_id, destination = 'test.jpg')
+    await message.bot.download(file=message.photo[-1].file_id, destination='test.jpg')
     await message.answer(model.inference('test.jpg'))
+    os.remove('test.jpg')
 
 # Запуск процесса поллинга новых апдейтов
 async def main():
