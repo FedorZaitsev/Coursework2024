@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     import json
 
-    with open(cfg['title'] + '_log.json', 'w') as f:
+    with open('train_logs/' + cfg['title'] + '_log.json', 'w') as f:
         json.dump(res, f)
 
     current_models = None
