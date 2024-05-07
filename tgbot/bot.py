@@ -7,6 +7,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.enums.content_type import ContentType
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 from collections import defaultdict
 from aiogram.types import (
     KeyboardButton,
@@ -35,7 +36,7 @@ default_model = None
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
-    await message.answer("Hello!")
+    await message.answer("Hello! To use this bot send an image you would like to classify")
 
 @dp.message(Command("config"))
 async def cmd_config(message: types.Message, state: FSMContext):

@@ -29,7 +29,7 @@
         "instance": "CrossEntropyLoss",
         "parameters": {}
     },
-    "model_save_path": "models/ConModel",
+    "model_save_path": "models/ConModel.pth",
     "q_model_save_path": "",
     "quantize": false    
 }

@@ -101,7 +101,7 @@ if __name__ == "__main__":
         current_models[key] = value
     
     with open('models/config.json', 'w') as f:
-        json.dump(models, f)
+        json.dump(current_models, f)
 
     exit(0)
     
