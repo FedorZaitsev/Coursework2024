@@ -1,37 +1,45 @@
 import torch.nn as nn
 import torch
 
-def ConvModel(num_classes=2):
+def ConvModel(num_classes=2, p=0):
     model = nn.Sequential(
-        nn.Conv2d(in_channels=3, out_channels=32, padding='same', kernel_size=9),
-        nn.BatchNorm2d(32),
-        nn.LeakyReLU(),
+        
+        nn.Conv2d(in_channels=3, out_channels=16, padding='same', kernel_size=3),
+        nn.BatchNorm2d(16),
+        nn.GELU(),
         nn.MaxPool2d(kernel_size=2),
-        nn.Dropout(0.45),    
+        nn.Dropout(p),    
 
-        nn.Conv2d(in_channels=32, out_channels=32, padding='same', kernel_size=9),
+        nn.Conv2d(in_channels=16, out_channels=32, padding='same', kernel_size=3),
         nn.BatchNorm2d(32),
-        nn.LeakyReLU(),
+        nn.GELU(),
         nn.MaxPool2d(kernel_size=2),
-        nn.Dropout(0.45),    
+        nn.Dropout(p),    
 
-        nn.Conv2d(in_channels=32, out_channels=32, padding='same', kernel_size=9),
-        nn.BatchNorm2d(32),
-        nn.LeakyReLU(),
+        nn.Conv2d(in_channels=32, out_channels=64, padding='same', kernel_size=3),
+        nn.BatchNorm2d(64),
+        nn.GELU(),
         nn.MaxPool2d(kernel_size=2),
-        nn.Dropout(0.45),    
+        nn.Dropout(p),    
 
-        nn.Conv2d(in_channels=32, out_channels=32, padding='same', kernel_size=9),
-        nn.BatchNorm2d(32),
-        nn.LeakyReLU(),
+        nn.Conv2d(in_channels=64, out_channels=128, padding='same', kernel_size=3),
+        nn.BatchNorm2d(128),
+        nn.GELU(),
         nn.MaxPool2d(kernel_size=2),
-        nn.Dropout(0.45),    
+        nn.Dropout(p),    
+        
+        nn.Conv2d(in_channels=128, out_channels=256, padding='same', kernel_size=3),
+        nn.BatchNorm2d(256),
+        nn.GELU(),
+        nn.MaxPool2d(kernel_size=2),
+        nn.Dropout(p),    
         
         nn.Flatten(),
-        nn.Linear(16 * 16 * 32, 1024),
-        nn.BatchNorm1d(1024),
-        nn.LeakyReLU(),
-        nn.Linear(1024, num_classes)
+        nn.Linear(8 * 8 * 256, 512),
+        nn.BatchNorm1d(512),
+        nn.GELU(),
+        nn.Linear(512, num_classes)
+
     )
 
     return model
