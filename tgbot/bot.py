@@ -16,13 +16,17 @@ from aiogram.types import (
     ReplyKeyboardRemove,
 )
 import os
+from dotenv import load_dotenv
+load_dotenv()
+
 import sys
 sys.path.append("..")
 
 from classification import Model
 
 logging.basicConfig(level=logging.INFO)
-bot = Bot(token="6883730058:AAEkLDCTDdWWugYFG0JmBef2LsS68n19hK0")
+
+bot = Bot(token=os.getenv('BOT_KEY'))
 # storage = MemoryStorage()
 dp = Dispatcher()
 
