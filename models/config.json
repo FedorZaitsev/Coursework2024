@@ -1,1 +1,54 @@
-{"ResNet18_CucumberDiseaseDataset": {"inference_info": {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}, "model_type": "ResNet18", "state_dict": "models/ResNet18_model.pth"}, "QuantizedResNet18_CucumberDiseaseDataset": {"inference_info": {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}, "state_dict": "models/ResNet18_quantized_model.pth", "model_type": "QuantizedResNet18"}, "Swin_CucumberDiseaseDataset": {"inference_info": {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}, "model_type": "Swin", "state_dict": "models/Swin_model.pth"}}
+{
+    "ResNet18_CucumberDiseaseDataset": {
+      "inference_info": {
+        "classes": [
+          "Ill_cucumber",
+          "good_Cucumber"
+        ],
+        "valid_transforms": {
+  
+        }
+      },
+      "model_type": "ResNet18",
+      "state_dict": "models/ResNet18_model.pt"
+    },
+    "QuantizedResNet18_CucumberDiseaseDataset": {
+      "inference_info": {
+        "classes": [
+          "Ill_cucumber",
+          "good_Cucumber"
+        ],
+        "valid_transforms": {
+  
+        }
+      },
+      "state_dict": "models/ResNet18_quantized_model.pt",
+      "model_type": "QuantizedResNet18"
+    },
+    "Swin_CucumberDiseaseDataset": {
+      "inference_info": {
+        "classes": [
+          "Ill_cucumber",
+          "good_Cucumber"
+        ],
+        "valid_transforms": {
+  
+        }
+      },
+      "model_type": "Swin",
+      "state_dict": "models/Swin_model.pth"
+    },
+    "BaselineConvModel_CucumberDiseaseDataset": {
+      "inference_info": {
+        "classes": [
+          "Ill_cucumber",
+          "good_Cucumber"
+        ],
+        "valid_transforms": {
+  
+        }
+      },
+      "model_type": "ConvModel",
+      "state_dict": "models/ConModel.pt"
+    }
+  }
