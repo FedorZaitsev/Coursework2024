@@ -6,6 +6,6 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
 COPY . /tg_bot
-ENV BOT_KEY=6883730058:AAEkLDCTDdWWugYFG0JmBef2LsS68n19hK0
+ENV BOT_KEY=
 
 CMD /start_bot.sh
