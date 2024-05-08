@@ -36,15 +36,26 @@ default_model = None
 
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
-    await message.answer("Hello! To use this bot send an image you would like to classify")
+    await message.answer("Hello! To use this bot send an image you would like to classify. You can also choose the classifier model via /config command")
+
+@dp.message(Command("help"))
+async def cmd_start(message: types.Message):
+    await message.answer("Hello! To use this bot send an image you would like to classify. You can also choose the classifier model via /config command")
 
 @dp.message(Command("config"))
 async def cmd_config(message: types.Message, state: FSMContext):
     await state.set_state(Form.model_name)
-    model_names = '\n'.join(models.keys())
+    kb = []
+    for model_name in models.keys():
+        kb.append([KeyboardButton(text=model_name)])
+
+    keyboard = ReplyKeyboardMarkup(keyboard=kb, 
+        resize_keyboard=True, 
+        input_field_placeholder="Choose model",
+        one_time_keyboard=True)
     await message.answer(
-        "Type in model which you would like to use:\n" + model_names, 
-        reply_markup=ReplyKeyboardRemove()
+        "Type in model which you would like to use:", 
+        reply_markup=keyboard
         )
 
 @dp.message(Command("cancel"))
@@ -88,6 +99,8 @@ async def process_photo(message: types.Message):
 
 async def main():
     await dp.start_polling(bot)
+    with open('bot_config.json', 'w') as f:
+        json.dump(bot_config, f)
 
 if __name__ == "__main__":
 
