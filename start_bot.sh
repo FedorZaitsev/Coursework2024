@@ -1,3 +1,4 @@
+pip install -r torch_requiremnts.txt
 pip install -r requirements.txt
 python3 update_bot_models.py
 cd tgbot
