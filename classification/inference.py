@@ -47,11 +47,3 @@ class Model():
         # print(output)
         return self.inference_info['classes'][y_pred]
 
-if __name__ == "__main__":
-    model_state = '../models/ResNet18_model'
-    inference_info = {"classes": ["Ill_cucumber", "good_Cucumber"], "valid_transforms": {}}
-    model = Model('ResNet18', model_state, inference_info)
-
-    img = '/home/fedor/Coursework2024/example/5.jpg'
-
-    print(model.inference(img))
