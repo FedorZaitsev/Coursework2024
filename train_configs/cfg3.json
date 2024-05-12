@@ -10,7 +10,7 @@
     "model": {
         "instance": "Swin",
         "parameters": {
-            "pretrained": true
+            "pretrained": false
         }
     },
     "num_epochs": 20,
