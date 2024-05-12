@@ -1,5 +1,5 @@
 {
-    "title": "Swin_CucumberDiseaseDataset",
+    "title": "Swin_CucumberDiseaseDataset_0aug",
     "seed": 52,
     "aug_cfg": {
         "transforms": {},

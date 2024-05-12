@@ -1,5 +1,5 @@
 {
-    "title": "ResNet18_CucumberDiseaseDataset",
+    "title": "ResNet18_CucumberDiseaseDataset_0aug",
     "seed": 52,
     "aug_cfg": {
         "transforms": {},
