@@ -10,7 +10,7 @@
     "model": {
         "instance": "ResNet18",
         "parameters": {
-            "pretrained": false
+            "pretrained": true
         }
     },
     "num_epochs": 30,
