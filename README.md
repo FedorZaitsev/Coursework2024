@@ -46,6 +46,8 @@ After that one should just run ```./start_bot.sh``` script, which will parse all
 There are four built in models: a relatively small VGG-inspired convolutional network, ResNet18, its quantized version and a tiny SwinTransformer V2. They were all trained or fine-tuned on a publicly available dataset dedicated to cucumber leaf diseases.
 https://www.kaggle.com/datasets/kareem3egm/cucumber-plant-diseases-dataset
 
+There is also an option of building a docker image to run the bot remotely. In order to perform this one should paste bot's API key into the Dockerfile and build docker image using given Dockerfile via ```docker build``` command. The bot will start working after the image is run.
+
 ### Adding custom models
 
 To make a custom model available for the bot to use, one should make sure that ```config.json``` file in ```models/``` directory contains an item with a unique key. This item should provide information about the model itself - its type (corresponding with the model namespace dictionary in ```classification/models.py```) and path to the saved model's state_dict. It also should contain its inference preferences - list of classes and albumentations instance corresponding with preprocessing transforms. If these requirements are met, the starting script will be able to copy information about available models in the bot configuration file and will initialize given models before starting the bot.
