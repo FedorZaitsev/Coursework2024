@@ -1,0 +1,37 @@
+{
+    "title": "ResNet18_CucumberDiseaseDataset",
+    "seed": 52,
+    "aug_cfg": {
+        "transforms": {},
+        "valid_transforms": {},
+        "use_original": true
+    },
+    "train_ratio": 1,
+    "model": {
+        "instance": "ResNet18",
+        "parameters": {
+            "pretrained": true
+        }
+    },
+    "num_epochs": 30,
+    "optimizer": {
+        "instance": "AdamW",
+        "parameters": {
+            "lr": 0.000005,
+            "weight_decay": 0.07
+        }
+    },
+    "scheduler": {
+        "instance": "CosineAnnealingLR",
+        "parameters": {
+            "T_max": 30
+        }
+    },
+    "loss_fn": {
+        "instance": "CrossEntropyLoss",
+        "parameters": {}
+    },
+    "model_save_path": "models/ResNet18_model.pt",
+    "q_model_save_path": "models/ResNet18_quantized_model.pt",
+    "quantize": true    
+}

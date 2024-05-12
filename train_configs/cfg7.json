@@ -1,0 +1,37 @@
+{
+    "title": "Swin_CucumberDiseaseDataset",
+    "seed": 52,
+    "aug_cfg": {
+        "transforms": {},
+        "valid_transforms": {},
+        "use_original": true
+    },
+    "train_ratio": 1,
+    "model": {
+        "instance": "Swin",
+        "parameters": {
+            "pretrained": true
+        }
+    },
+    "num_epochs": 20,
+    "optimizer": {
+        "instance": "AdamW",
+        "parameters": {
+            "lr": 0.000005,
+            "weight_decay": 0.07
+        }
+    },
+    "scheduler": {
+        "instance": "CosineAnnealingLR",
+        "parameters": {
+            "T_max": 20
+        }
+    },
+    "loss_fn": {
+        "instance": "CrossEntropyLoss",
+        "parameters": {}
+    },
+    "model_save_path": "models/Swin_model.pth",
+    "q_model_save_path": "",
+    "quantize": false   
+}
