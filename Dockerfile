@@ -7,7 +7,7 @@ RUN pip install --requirement requirements.txt
 
 COPY . .
 
-ENV BOT_KEY=6883730058:AAEkLDCTDdWWugYFG0JmBef2LsS68n19hK0
+ENV BOT_KEY=
 
 RUN python3 update_bot_models.py
 RUN cd /fedors_bot/tgbot/
