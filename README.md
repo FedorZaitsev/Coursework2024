@@ -6,6 +6,9 @@ ___
 
 This repository is a part of the author's coursework and contains a python package for image classification as well as asynchronous telegram bot backend for obtained models' inference. As the author's project was dedicated to cucumber leaf disease prevention, built in models are trained to diagnose cucumber plant the picture of its leaf, hence the name. However this package and bot backend can be used to implement any kind of image classification.
 
+The author's bot:
+https://t.me/cucumber_diagnostician_bot
+
 ## Table of Contents
 1. [Implementing and training a model](#implementing-and-training-a-model)
 2. [Starting the bot](#starting-the-bot)
@@ -55,3 +58,4 @@ To make a custom model available for the bot to use, one should make sure that `
 ### Using the bot
 
 To use the bot one should just simply send it a photo to classify (note that it will only parse pictures sent the "quick way" i.e. as a photo and not as a file). After that bot will respond with the name of the most possible class of the picture according to the chosen model. It should be clear that possible output depends entirely on the chosen model and its classes. Model can be changed via ```/config``` command, which will show the user a list of all available models and will offer to choose one of them with a keyboard button.
+
